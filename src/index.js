@@ -1,50 +1,46 @@
 import React from "react";
 import { render } from "react-dom";
+import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-const style = {
-  height: 30,
-  border: "2px solid gray",
-  margin: 6,
-  padding: 8
-};
-
-class App extends React.Component {
+export default class DemoTable extends React.Component {
   state = {
-    items: Array.from({ length: 20 })
+    products: Array.from({ length: 0 })
   };
 
   fetchMoreData = () => {
-    // a fake async api call like which sends
-    // 20 more records in 1.5 secs
-    setTimeout(() => {
-      this.setState({
-        items: this.state.items.concat(Array.from({ length: 20 }))
-      });
-    }, 1500);
+    this.setState({
+      //items: this.state.products.concat(Array.from({ length: 20 }))
+    });
   };
 
   render() {
     return (
       <div>
-        <h1>Tabelas</h1>
-        <hr />
         <InfiniteScroll
-          dataLength={this.state.items.length}
+          dataLength={this.state.products.length}
           next={this.fetchMoreData}
-          hasMore={true}
+          hasMore
           loader={<h4>Carregando...</h4>}
         >
-          {this.state.items.map((i, index) => (
-            <div style={style} key={index}>
-              Tabela n°
-              {index + 1}
-            </div>
-          ))}
+          <BootstrapTable ref="table" data={this.state.products}>
+            <TableHeaderColumn dataField="id" isKey={true}>
+              Product ID
+            </TableHeaderColumn>
+            <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
+            <TableHeaderColumn dataField="price">
+              Product Price
+            </TableHeaderColumn>
+          </BootstrapTable>
+          {this.state.products.push({
+            id: this.state.products.length,
+            name: "Product n°" + this.state.products.length,
+            price: 100 + ",00 $"
+          })}
         </InfiniteScroll>
       </div>
     );
   }
 }
 
-render(<App />, document.getElementById("root"));
+render(<DemoTable />, document.getElementById("root"));
