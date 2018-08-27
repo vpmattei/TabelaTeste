@@ -1,6 +1,7 @@
 import React from "react";
+import { render } from "react-dom";
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
-import InsertDefaultValueTable from "./insert-default-value-table";
+import InsertDefaultValueTable from "../insert-default-value-table";
 
 const jobs = [];
 const jobTypes = [
@@ -73,3 +74,5 @@ export default class addRow extends InsertDefaultValueTable {
     };
   }
 }
+
+render(<InsertDefaultValueTable />, document.getElementById("root"));

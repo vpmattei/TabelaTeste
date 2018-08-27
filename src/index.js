@@ -5,21 +5,22 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 export default class DemoTable extends React.Component {
   state = {
-    products: Array.from({ length: 0 })
+    products: Array.from({ length: 0 }),
+    result: 0
   };
 
-  fetchMoreData = () => {
+  fetchMoreData(e) {
     this.setState({
       //items: this.state.products.concat(Array.from({ length: 20 }))
     });
-  };
+  }
 
   render() {
     return (
       <div>
         <InfiniteScroll
           dataLength={this.state.products.length}
-          next={this.fetchMoreData}
+          next={this.newFakeRow}
           hasMore
           loader={<h4>Carregando...</h4>}
         >
