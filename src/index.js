@@ -3,6 +3,11 @@ import { render } from "react-dom";
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 import InfiniteScroll from "react-infinite-scroll-component";
 
+const cellEditProp = {
+  mode: "dbclick",
+  blurToSave: true
+};
+
 export default class DemoTable extends React.Component {
   state = {
     products: Array.from({ length: 0 })
@@ -10,6 +15,7 @@ export default class DemoTable extends React.Component {
 
   fetchMoreData = () => {
     this.setState({
+      //setState é necessário por alguma razão, mesmo que não tenha nada dentro
       //items: this.state.products.concat(Array.from({ length: 20 }))
     });
   };
@@ -23,7 +29,11 @@ export default class DemoTable extends React.Component {
           hasMore
           loader={<h4>Carregando...</h4>}
         >
-          <BootstrapTable ref="table" data={this.state.products}>
+          <BootstrapTable
+            ref="table"
+            data={this.state.products}
+            cellEdit={cellEditProp}
+          >
             <TableHeaderColumn dataField="id" isKey={true}>
               Product ID
             </TableHeaderColumn>
