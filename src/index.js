@@ -10,7 +10,8 @@ const cellEditProp = {
 
 export default class DemoTable extends React.Component {
   state = {
-    products: Array.from({ length: 0 })
+    products: []
+    //products: Array.from({ length: 0 })   //erro ocorre se tentarmos mudar o 'lenght' de 'products'
   };
 
   fetchMoreData = () => {
