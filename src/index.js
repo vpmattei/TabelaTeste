@@ -11,17 +11,40 @@ const cellEditProp = {
 export default class DemoTable extends React.Component {
   state = {
     products: []
-    //products: Array.from({ length: 0 })   //erro ocorre se tentarmos mudar o 'lenght' de 'products'
+    //products: Array.from({ length: 0 })
+    //erro ocorre se mudarmos o 'length' de 'products' para algo maior que 0,
+    //porem se 'setarmos' o tamanho da seguinte forma: products: [1,2,3],
+    //rows vazios serão adicionados
+  };
+
+  setProductData = () => {
+    const startId = this.state.products.length + 1;
+    for (let i = 0; i < 100; i++) {
+      const id = startId + i;
+      this.state.products.push({
+        id: id,
+        name: "Product n°" + id,
+        price: 100 + ",00 $"
+      });
+    }
   };
 
   fetchMoreData = () => {
-    this.setState({
-      //setState é necessário por alguma razão, mesmo que não tenha nada dentro
-      //products: this.state.products.concat(Array.from({ length: 20 }))
-    });
+    setTimeout(() => {
+      this.setProductData();
+      this.setState({
+        //setState é necessário por alguma razão, mesmo que não tenha nada dentro
+        //products: this.state.products.concat(Array.from({ length: 20 }))
+      });
+    }, 1000);
   };
 
+  number = 0;
   render() {
+    while (this.number < 1) {
+      this.setProductData();
+      this.number++;
+    }
     return (
       <div>
         <InfiniteScroll
@@ -30,11 +53,7 @@ export default class DemoTable extends React.Component {
           hasMore
           loader={<h4>Carregando...</h4>}
         >
-          <BootstrapTable
-            ref="table"
-            data={this.state.products}
-            cellEdit={cellEditProp}
-          >
+          <BootstrapTable data={this.state.products} cellEdit={cellEditProp}>
             <TableHeaderColumn dataField="id" isKey={true}>
               Product ID
             </TableHeaderColumn>
@@ -43,11 +62,6 @@ export default class DemoTable extends React.Component {
               Product Price
             </TableHeaderColumn>
           </BootstrapTable>
-          {this.state.products.push({
-            id: this.state.products.length,
-            name: "Product n°" + this.state.products.length,
-            price: 100 + ",00 $"
-          })}
         </InfiniteScroll>
       </div>
     );
