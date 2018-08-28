@@ -30,13 +30,16 @@ export default class DemoTable extends React.Component {
   };
 
   fetchMoreData = () => {
+    //delay de 2s
     setTimeout(() => {
       this.setProductData();
       this.setState({
         //setState é necessário por alguma razão, mesmo que não tenha nada dentro
+        //de novo se tentarmos adicionar o tamanho do array com:
         //products: this.state.products.concat(Array.from({ length: 20 }))
+        //obtemos um erro
       });
-    }, 1000);
+    }, 2000);
   };
 
   number = 0;
